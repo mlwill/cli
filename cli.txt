@@ -1,10 +1,30 @@
 # cli.txt 
 
+# tells you the number of columns.
+tput cols 
+# tells you the number of rows
+tput lines 
 
-============
-:: GITHUB ::
-============
+======
+ DKMS
+======
+To build and install your modules run: dkms install vboxhost/4.3.14
+To do this automatically at startup run: systemctl enable dkms.service
 
+========
+ adsuck 
+========
+Adding adsuck group
+Adding adsuck user
+Now manipulate the regex file /var/adsuck/filter and get your /var/adsuck/hosts file
+Examples: http://www.mvps.org/winhelp2002/hosts.txt
+          http://rlwpx.free.fr/WPFF/hosts.htm
+          http://pgl.yoyo.org/adservers/serverlist.php?showintro=0;hostformat=hosts
+And make sure your setup with resolv.conf is correct.
+
+========
+ GITHUB 
+========
 # Create a new repository on the command line:
 touch README.md
 git init
@@ -12,22 +32,18 @@ git add README.md
 git commit -m "first commit"
 git remote add origin git@github.com:mlwill/<NEW REPO>.git
 git push -u origin master
-
 # Show you the remote repository aliases
 git remote -v
 
-
-==============================
-:: get current device names ::
-==============================
+==========================
+ get current device names 
+==========================
 # (e.g. wlp2s0)
 ls /sys/class/net
 
-
-=============
-:: VIMDIFF ::
-=============
-
+=========
+ VIMDIFF 
+=========
 ]c :        - next difference
 [c :        - previous difference
 do          - diff obtain
@@ -37,18 +53,14 @@ zc          - close folded text
 
 :diffupdate - re-scan the files for differences
 
-
-==============================
-:: display color with codes ::
-==============================
-
+==========================
+ display color with codes 
+==========================
 for code in {0..255}; do echo -e "\e[38;05;${code}m $code: Test"; done
 
-
-============================
-:: display all 256 colors ::
-============================
-
+========================
+ display all 256 colors 
+========================
 function aa_256 () 
 { 
     local o= i= x=`tput op` cols=`tput cols` y= oo= yy=;
@@ -64,183 +76,137 @@ function aa_256 ()
 
 now type: aa_256 
 
-
-===================
-:: rEFInd update ::
-===================
-
+===============
+ rEFInd update 
+===============
 sudo cp /usr/share/refind/refind_x64.efi /boot/efi/EFI/refind/refind_x64.efi 
-
 sudo cp /usr/share/refind/refind.conf-sample /boot/efi/EFI/refind/refind.conf 
-
 sudo cp -r /usr/share/refind/{icons,fonts,drivers_x64} /boot/efi/EFI/refind/
 
-
-==========
-:: nmap ::
-==========
-
+======
+ nmap 
+======
 # ping scan
 nmap -sP 192.168.1.0/24
-
 # show host interfaces and routes
 nmap --iflist
 
-
-=============
-:: ip link ::
-=============
-
+=========
+ ip link 
+=========
 # Network interface: wlp2s0/enp3s0f2
 ip link show <interface>
-
 ip link set dev <interface> up/down
 
-
-================
-:: macchanger :: 
-================
-
+============
+ macchanger  
+============
 # fully random
 macchanger -r <interface>
-
 # keep vendor bytes
 macchanger -e <interface>
-
 # return mac address to original, permanent hardware value
 macchanger -p <interface>
 
-
-===============
-:: systemctl ::
-===============
-
+===========
+ systemctl 
+===========
 # restart network
 systemctl restart netctl-auto@wlp2s0.service 
 
-
-=============
-:: tcpdump ::
-=============
-
+=========
+ tcpdump 
+=========
 # To check that DNS queries are effectively sent encrypted, you can use tcpdump, and then surf on your computer. Run:
 sudo tcpdump -i wlp2s0 dst host 208.67.222.222 or dst host 208.67.220.220 or src host 208.67.222.222 or src host 208.67.220.220 -n
 
-
-==================
-:: Sanity check ::
-==================
-
+==============
+ Sanity check 
+==============
 # for /etc/passwd
 sudo pwck
 # for /etc/group
 sudo grpck
 
-
-==========
-:: java ::
-==========
-
+======
+ java 
+======
 # open java .jnlp file
 javaws filename.jnlp
 
-
-============
-:: pacman ::
-============
-
+========
+ pacman 
+========
 # pacman: downgrade package
 cd /var/cache/pacman/pkg/
 sudo pacman -U libxcursor-1.1.14-1-x86_64.pkg.tar.xz
-
 # pacman: remove pkg, deps, and config files
 pacman -Rns
-
 # paccache: clear pacman cache of all but 1 old version
 paccache -rv -k 1
-
 # The following command will list any installed packages that are not in base/base-devel, 
 # and as such were likely installed manually by the user:
 comm -23 <(pacman -Qeq|sort) <(pacman -Qgq base base-devel|sort)
 # redirect stdout to packages.txt:
 > pactips.txt
-
 # To make sure to only remove real orphans, you should use 
 # pkg-list_true_orphans from the package pkg_scripts.
 pkg-list_true_orphans
 
-=================
-:: libreoffice ::
-=================
-
+=============
+ libreoffice 
+=============
 Convert docx to pdf:
 libreoffice -convert-to pdf fileToConvert.docx -outdir output/path/for/pdf
 # Useful commands
 
-
-=================
-:: imagemagick ::
-=================
-
+=============
+ imagemagick 
+=============
 # png to pdf
 convert sample.png sample.pdf
 
-
-==============
-:: cdrecord ::
-==============
-
+==========
+ cdrecord 
+==========
 # scan for devices
 cdrecord -scanbus
 # Burn iso:
 cdrecord -v dev=2,0,0 isoimage.iso
 
-
-===========
-:: rsync ::
-===========
-
+=======
+ rsync 
+=======
 # (this is recursive)
 rsync -r source destination
 
-
-===============================================
-:: mount,check :: devices,partition,directory ::
-===============================================
-
+=============================================
+ mount,check ==> devices,partition,directory 
+=============================================
 # mount cdrom:
 mount -t iso9660 /dev/sr0 /mnt/cdrom
-
 # mount ntfs partition:
 ntfs-3g /dev/your-NTFS-partition /mount-location
-
 # check devices and mount point
 blkid -o list
 # or use
 lsblk -f
-
 #check partition sizes
 df -h
- 
 #check directory size
 du -s -h /var/log/
- 
 #check every directory and file sizes under a dir.
 du -s -h /var/log/*
- 
 #check individual size size
 du -s -h /var/log/lastlog
 
-
-=========
-:: AUR ::
-=========
-
+=====
+ AUR 
+=====
 # AUR build problem solved by adding line:
 # error:
 /usr/bin/ld: note: 'pow@@GLIBC_2.2.5' is defined in DSO /lib/libm.so.6 
 so try adding it to the linker command line
-
 solution: 
 build() {
 cd ${srcdir}/${pkgname}-${pkgver}
@@ -248,63 +214,50 @@ cd ${srcdir}/${pkgname}-${pkgver}
 export LDFLAGS="$LDFLAGS -lm" #########<-add this line-###########
 ./configure --prefix=/usr \
 
-
-================
-:: navigation ::
-================
-
+============
+ navigation 
+============
 # Go to last directory
 cd -
-
 # Remove contents of directory but not the directory itself
 # cd into directory then
 rm -rf *
 # or 
 rm -rf path_to_directory/*
 
-
-=========
-:: awk ::
-=========
-
+=====
+ awk 
+=====
 # Extract a column of data from array
 awk '{print $1}' FILENAME >> OutputFilename
 # (The number after the dollar sign is the column you are extracting)
 # (And send it to another file)
 
-
-===========
-:: scrot ::
-===========
-
+=======
+ scrot 
+=======
 # Screen shot
 $ scrot -t 20 -d 5
 
-
-========
-:: HP ::
-========
-
+====
+ HP 
+====
 hp-devicesettings
 
 
-==========
-:: gEDA ::
-==========
-
+======
+ gEDA 
+======
 gnetlist -g spice-sdb -o diode-vi.net diode-vi.sch
 # for AC: Vsignal waveform(DCoffset amplitude frequency)
 sin(0 10 1kHz)
 
-
-=============
-:: NGSPICE ::
-=============
-
+=========
+ NGSPICE 
+=========
 *plot dc.Vdiode  dc.i(Vdummy)
 wrdata VDtemp200 dc.Vdiode
 wrdata file netname1 [netname2 ...]
-
 ** Operating point analysis is useful to find the 
 ** biasing point of nonlinear devices
 op
@@ -312,57 +265,46 @@ op
 ** can be obtained with the show command:
 show q1
 
-
-=========
-:: zip ::
-=========
-
+=====
+ zip 
+=====
 zip archivefile1 doc1 doc2 doc3
 # creates a file "archivefile1.zip" which contains a copy of the files 
 # doc1, doc2, and doc3, located in the current directory. 
 
-
-==============
-:: HDMI/VGA ::
-==============
-
+==========
+ HDMI/VGA 
+==========
 # Enable HDMI
 xrandr --output HDMI1 --auto
 # Disable HDMI
 xrandr --output HDMI1 --off
-
 # Enable VGA
 xrandr --output VGA1 --auto
 # Disable VGA
 xrandr --output VGA1 --auto
-
 # List PLAYBACK Hardware Devices
 aplay -l
-
 # Send sound to the device
 aplay -D plughw:0,3 /usr/share/sounds/alsa/Front_Center.wav
 
-
-==========
-:: xset ::
-==========
-
+======
+ xset 
+======
 # Disable dpms and prevent screen from blanking (e.g. movies)
 xset -dpms; xset s off
 
-
-============
-:: python ::
-============
-
+========
+ python 
+========
 # Make python script executable
 # First line: #!/usr/bin/env python2
 # Change mode of file by giving execute permissions to all users: 
 chmod a+x <filename>
 
 ===========
-:: Julia ::
-===========
+:Julia ::
+==========
 # List Comprehensions
 IE = [IC[i] + IB for i = 1:length(IC)]
 
@@ -463,89 +405,63 @@ plt.draw()
 plt.show()
 
 
-===========
-:: sympy ::
-===========
+=======
+ sympy 
+=======
 
 from sympy import Symbol, Interval, pi, exp, sqrt
 from sympy.stats import P, E, variance, density, ContinuousRV
 from sympy.plotting import plot
 from sympy.stats import *
-
 from sympy import Symbol, Interval, pi, exp, sqrt
-
 from sympy.stats import P, E, variance, density, ContinuousRV
-
 from sympy.plotting import plot
-
 x = Symbol("X")
-
 pdf = 3*x**2
-
 X = ContinuousRV(x, pdf, Interval(0, 1))
-
 P(X > 0.5)
-
 E(X)
-
 variance(X)
-
 plot(3*x**2, (x, 0, 1), xlabel=("x"), ylabel=("y"), title=("Example"))
-
 E(2*cos(X)+X**2) # complex expressions are ok too
-
 # integrate from 0 to 1 with respect to x
 quad(lambda x:(x - .75)**2*3*x**2,0,1)
-
 # to integrate from 1 to infinity 
 from sympy import integrate
 from sympy import oo
 integrate(k*1/x**4,(x, 1, oo))
-
 # solve for the constant k of the given pdf
 solve(Eq(integrate(k/x**4,(x, 1, oo)),1),k)
 
-
-===========
-:: scipy ::
-===========
-
+=======
+ scipy 
+=======
 from scipy.stats import geom
-
 p=1.0/4.0
-
 dist = geom(p)
-
 dist.pmf(4)
 
-
-===========
-:: numpy ::
-===========
-
+=======
+ numpy 
+=======
 import numpy as np
 # numpy complex numbers
 z = a + bj
 z = complex(a,b)
-
 # magnitude
 abs(z)
-
 # angle
 np.angle(z)
 
-
-================
-:: matplotlib ::
-================
-
+============
+ matplotlib 
+============
 # plot two y axes of different scale
 ax1 = fig.add_subplot(111)
 ax1.plot(t*1e3, signal*1e3, color="g", label=r'in')
 ax1.set_ylabel(r"Input Signal: Voltage ($mV$)")
 ax1.set_ylim(-15, 15)
 ax1.legend(loc=3)#, title="in")
-
 ax2 = ax1.twinx()
 ax2.plot(t*1e3, out, color="blue", label=r'out')
 ax2.set_ylabel(r"Output Signal: Voltage ($V$)")
